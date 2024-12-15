@@ -4,25 +4,41 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MVC_Pattern
+namespace singleton
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            Student student = new Student { Id=1,Name="Menna",Grade=90.5};
-            StudentViewer studentview = new StudentViewer();
-            StudentController controller = new StudentController(student,studentview);
-            controller.UpdateView();
+            Singleton s1 = Singleton.getinstance();
+            s1.print();
+            Singleton s2 = Singleton.getinstance();
+            if(s1==s2)
+            {
+                Console.WriteLine("Equal");
+            }
+            else
+            {
+                Console.WriteLine("Not Equal");
+            }    
+        }
+    }
 
-            controller.SetStudentId(2);
-            controller.SetStudentName("Khalil");
-            controller.SetStudentGrade(85.5);
+    class Singleton
+    {
+        private static Singleton instance = null;
+        private Singleton() { }
+        public static Singleton getinstance()
+        {
+            if(instance==null)
+            {
+                instance = new Singleton();
 
-            Console.WriteLine("-----------------------------------------------------");
-            controller.UpdateView();
-
-
+            }return instance;
+        }
+        public void print()
+        {
+            Console.WriteLine("Hello from Singleton");
         }
     }
 }
